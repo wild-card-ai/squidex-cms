@@ -8,6 +8,11 @@
 namespace Squidex.Areas.Api.Controllers;
 
 public sealed class ContributorsMetadata
+    public static class ContributorsMetadataDefaults
+    {
+        public const string IsInvitedTrue = "true";
+    }
+
 {
     /// <summary>
     /// Indicates whether the user has been invited.

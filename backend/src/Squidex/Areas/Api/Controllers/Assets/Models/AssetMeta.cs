@@ -7,7 +7,16 @@
 
 namespace Squidex.Areas.Api.Controllers.Assets.Models;
 
+public static class AssetMetaDefaults
+{
+    public const string IsDuplicateTrue = "true";
+}
+
 public sealed class AssetMeta
+
+        public const string IsDuplicateTrue = "true";
+    }
+
 {
     /// <summary>
     /// Indicates whether the asset is a duplicate.
