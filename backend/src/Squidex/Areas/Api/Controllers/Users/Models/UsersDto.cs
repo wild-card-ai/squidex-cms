@@ -6,6 +6,7 @@
 // ==========================================================================
 
 using Squidex.Shared.Users;
+using Squidex.Shared;
 using Squidex.Web;
 
 namespace Squidex.Areas.Api.Controllers.Users.Models;
@@ -39,7 +40,7 @@ public sealed class UsersDto : Resource
 
         if (context.CanCreateUser)
         {
-            AddPostLink("create",
+            AddPostLink(ApiConstants.RelCreate,
                 context.Url<UserManagementController>(c => nameof(c.PostUser)));
         }
 

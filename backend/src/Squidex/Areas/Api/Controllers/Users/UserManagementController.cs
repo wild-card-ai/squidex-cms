@@ -6,6 +6,7 @@
 // ==========================================================================
 
 using Microsoft.AspNetCore.Mvc;
+using Squidex.Shared;
 using Squidex.Areas.Api.Controllers.Users.Models;
 using Squidex.Domain.Users;
 using Squidex.Infrastructure;
@@ -31,7 +32,7 @@ public sealed class UserManagementController(ICommandBus commandBus, IUserServic
     /// <param name="take">The number of users to return.</param>
     /// <response code="200">Users returned.</response>
     [HttpGet]
-    [Route("user-management/")]
+    [Route(ApiConstants.UserManagementRoute)]
     [ProducesResponseType(typeof(UsersDto), StatusCodes.Status200OK)]
     [ApiPermission(PermissionIds.AdminUsersRead)]
     public async Task<IActionResult> GetUsers([FromQuery] string? query = null, [FromQuery] int skip = 0, [FromQuery] int take = 10)
@@ -50,7 +51,7 @@ public sealed class UserManagementController(ICommandBus commandBus, IUserServic
     /// <response code="200">User returned.</response>
     /// <response code="404">User not found.</response>
     [HttpGet]
-    [Route("user-management/{id}/")]
+    [Route(ApiConstants.UserManagementIdRoute)]
     [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
     [ApiPermission(PermissionIds.AdminUsersRead)]
     public async Task<IActionResult> GetUser(string id)
@@ -74,7 +75,7 @@ public sealed class UserManagementController(ICommandBus commandBus, IUserServic
     /// <response code="201">User created.</response>
     /// <response code="400">User request not valid.</response>
     [HttpPost]
-    [Route("user-management/")]
+    [Route(ApiConstants.UserManagementRoute)]
     [ProducesResponseType(typeof(UserDto), StatusCodes.Status201Created)]
     [ApiPermission(PermissionIds.AdminUsersCreate)]
     public async Task<IActionResult> PostUser([FromBody] CreateUserDto request)
@@ -95,7 +96,7 @@ public sealed class UserManagementController(ICommandBus commandBus, IUserServic
     /// <response code="400">User request not valid.</response>
     /// <response code="404">User not found.</response>
     [HttpPut]
-    [Route("user-management/{id}/")]
+    [Route(ApiConstants.UserManagementIdRoute)]
     [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
     [ApiPermission(PermissionIds.AdminUsersUpdate)]
     public async Task<IActionResult> PutUser(string id, [FromBody] UpdateUserDto request)
@@ -115,14 +116,14 @@ public sealed class UserManagementController(ICommandBus commandBus, IUserServic
     /// <response code="403">User is the current user.</response>
     /// <response code="404">User not found.</response>
     [HttpPut]
-    [Route("user-management/{id}/lock/")]
+    [Route(ApiConstants.UserManagementLockRoute)]
     [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
     [ApiPermission(PermissionIds.AdminUsersLock)]
     public async Task<IActionResult> LockUser(string id)
     {
         if (this.IsUser(id))
         {
-            throw new DomainForbiddenException(T.Get("users.lockYourselfError"));
+            throw new DomainForbiddenException(T.Get(ApiConstants.ErrorLockYourself));
         }
 
         var user = await userService.LockAsync(id, HttpContext.RequestAborted);
@@ -140,14 +141,14 @@ public sealed class UserManagementController(ICommandBus commandBus, IUserServic
     /// <response code="403">User is the current user.</response>
     /// <response code="404">User not found.</response>
     [HttpPut]
-    [Route("user-management/{id}/unlock/")]
+    [Route(ApiConstants.UserManagementUnlockRoute)]
     [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
     [ApiPermission(PermissionIds.AdminUsersUnlock)]
     public async Task<IActionResult> UnlockUser(string id)
     {
         if (this.IsUser(id))
         {
-            throw new DomainForbiddenException(T.Get("users.unlockYourselfError"));
+            throw new DomainForbiddenException(T.Get(ApiConstants.ErrorUnlockYourself));
         }
 
         var user = await userService.UnlockAsync(id, HttpContext.RequestAborted);
@@ -165,14 +166,14 @@ public sealed class UserManagementController(ICommandBus commandBus, IUserServic
     /// <response code="403">User is the current user.</response>
     /// <response code="404">User not found.</response>
     [HttpDelete]
-    [Route("user-management/{id}/")]
+    [Route(ApiConstants.UserManagementIdRoute)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ApiPermission(PermissionIds.AdminUsersUnlock)]
     public async Task<IActionResult> DeleteUser(string id)
     {
         if (this.IsUser(id))
         {
-            throw new DomainForbiddenException(T.Get("users.deleteYourselfError"));
+            throw new DomainForbiddenException(T.Get(ApiConstants.ErrorDeleteYourself));
         }
 
         await userService.DeleteAsync(id, HttpContext.RequestAborted);
