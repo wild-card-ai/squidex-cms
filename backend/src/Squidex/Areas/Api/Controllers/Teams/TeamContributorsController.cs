@@ -15,12 +15,14 @@ using Squidex.Infrastructure.Reflection;
 using Squidex.Shared;
 using Squidex.Shared.Users;
 using Squidex.Web;
+using Squidex.Infrastructure.Validation;
 
 namespace Squidex.Areas.Api.Controllers.Teams;
 
 /// <summary>
 /// Update and query teams.
 /// </summary>
+    [ProducesResponseType(typeof(ValidationError), StatusCodes.Status400BadRequest)]
 [ApiExplorerSettings(GroupName = nameof(Teams))]
 public sealed class TeamContributorsController(ICommandBus commandBus, IUserResolver userResolver) : ApiController(commandBus)
 {
