@@ -38,6 +38,25 @@ export function hasAnyLink(value: Resource | ResourceLinks, ...rels: ReadonlyArr
     return !!getLinkUrl(value, ...rels);
 }
 
+// Helper to get a specific link object (not just URL)
+export function getLink(value: Resource | ResourceLinks, rel: string): ResourceLink | undefined {
+    if (!value) {
+        return undefined;
+    }
+    const links = (value._links || value) as ResourceLinks;
+    return links[rel];
+}
+
+// Helper to get all available link rels
+export function getAvailableLinks(value: Resource | ResourceLinks): string[] {
+    if (!value) {
+        return [];
+    }
+    const links = (value._links || value) as ResourceLinks;
+    return Object.keys(links);
+}
+
+
 export type ResourceMethod =
     'GET' |
     'DELETE' |
