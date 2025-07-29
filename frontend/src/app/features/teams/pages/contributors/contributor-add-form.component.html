@@ -1,7 +1,7 @@
 <div class="card card-body card-create mb-4">
     <h5 class="card-title">{{ "contributors.add.title" | sqxTranslate }}</h5>
 
-    <form [formGroup]="assignContributorForm.form" (ngSubmit)="assignContributor()">
+    <form [formGroup]="assignContributorForm.form" (ngSubmit)="assignContributor()" aria-label="Add or invite a contributor" role="form">
         <div class="row gx-2">
             <div class="col">
                 <sqx-autocomplete
@@ -10,6 +10,7 @@
                     icon="search"
                     [itemsSource]="usersDataSource"
                     placeholder="{{ 'contributors.emailPlaceholder' | sqxTranslate }}">
+                    aria-label="Select contributor role"
                     <ng-template let-user="$implicit">
                         <span class="autocomplete-user">
                             <img class="user-picture" [src]="user | sqxUserDtoPicture" />
@@ -20,7 +21,7 @@
             </div>
 
             <div class="col-auto">
-                <button class="btn btn-success" [disabled]="assignContributorForm.hasNoUser | async" type="submit">
+                <button class="btn btn-success" [disabled]="assignContributorForm.hasNoUser | async" type="submit" aria-label="Add contributor" title="Add contributor">
                     {{ "contributors.add" | sqxTranslate }}
                 </button>
             </div>

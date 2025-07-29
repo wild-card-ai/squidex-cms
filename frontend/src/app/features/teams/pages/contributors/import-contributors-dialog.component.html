@@ -1,4 +1,4 @@
-<form [formGroup]="importForm.form" (ngSubmit)="detect()">
+<form [formGroup]="importForm.form" (ngSubmit)="detect()" aria-label="Import contributors" role="form">
     <sqx-modal-dialog (dialogClose)="dialogClose.emit()">
         <ng-container title> {{ "contributors.importTitle" | sqxTranslate }} </ng-container>
         <ng-container content>
@@ -40,13 +40,13 @@
             </button>
             @switch (importStage) {
                 @case ("Start") {
-                    <button class="btn btn-success" [disabled]="importForm.hasNoUser | async" type="submit">
+                    <button class="btn btn-success" [disabled]="importForm.hasNoUser | async" type="submit" aria-label="Detect contributors from input" title="Detect contributors from input">
                         {{ "contributors.import.run" | sqxTranslate }}
                     </button>
                 }
 
                 @case ("Change") {
-                    <button class="btn btn-success" (click)="import()" [disabled]="importStatus.length === 0" type="button">
+                    <button class="btn btn-success" (click)="import()" [disabled]="importStatus.length === 0" type="button" aria-label="Import contributors" title="Import contributors">
                         {{ "contributors.import.run2" | sqxTranslate }}
                     </button>
                 }

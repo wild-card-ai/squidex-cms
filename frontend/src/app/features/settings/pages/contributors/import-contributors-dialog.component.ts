@@ -75,7 +75,7 @@ export class ImportContributorsDialogComponent {
                         const status = this.importStatus.find(x => x.email === s.email);
 
                         if (status) {
-                            status.resultText = getSuccess(created);
+                            status.resultText = getSuccess(created, status.email, status.role);
                             status.result = 'Success';
                         }
                     }),
@@ -83,7 +83,7 @@ export class ImportContributorsDialogComponent {
                         const status = this.importStatus.find(x => x.email === s.email);
 
                         if (status) {
-                            status.resultText = getError(error);
+                            status.resultText = getError(error, status.email, status.role);
                             status.result = 'Failed';
                         }
 
@@ -98,11 +98,19 @@ function createRequest(status: ImportStatus) {
     return new AssignContributorDto({ contributorId: status.email, role: status.role, invite: true });
 }
 
-function getError(error: ErrorDto): string {
+function getError(error: ErrorDto, email?: string, role?: string): string {
+    if (email && role) {
+        return `i18n:contributors.import.failed|{email:${email}},{role:${role}},{error:${error.details[0].originalMessage}}`;
+    }
     return error.details[0].originalMessage;
 }
 
-function getSuccess(created: boolean | undefined): string {
+function getSuccess(created: boolean | undefined, email?: string, role?: string): string {
+    if (email && role) {
+        return created
+            ? `i18n:contributors.import.success|{email:${email}},{role:${role}}`
+            : `i18n:contributors.import.success|{email:${email}},{role:${role}}`;
+    }
     return created ?
         'i18n:contributors.contributorAssignedInvited' :
         'i18n:contributors.contributorAssignedExisting';
