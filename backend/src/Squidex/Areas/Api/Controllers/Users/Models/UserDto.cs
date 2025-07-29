@@ -6,6 +6,7 @@
 // ==========================================================================
 
 using Squidex.Infrastructure.Reflection;
+using Squidex.Shared;
 using Squidex.Shared.Identity;
 using Squidex.Shared.Users;
 using Squidex.Web;
@@ -66,27 +67,27 @@ public sealed class UserDto : Resource
         {
             if (resources.CanLockUser && !IsLocked)
             {
-                AddPutLink("lock",
+                AddPutLink(ApiConstants.RelLock,
                     resources.Url<UserManagementController>(c => nameof(c.LockUser), values));
             }
 
             if (resources.CanUnlockUser && IsLocked)
             {
-                AddPutLink("unlock",
+                AddPutLink(ApiConstants.RelUnlock,
                     resources.Url<UserManagementController>(c => nameof(c.UnlockUser), values));
             }
 
-            AddDeleteLink("delete",
+            AddDeleteLink(ApiConstants.RelDelete,
                 resources.Url<UserManagementController>(x => nameof(x.DeleteUser), values));
         }
 
         if (resources.CanUpdateUser)
         {
-            AddPutLink("update",
+            AddPutLink(ApiConstants.RelUpdate,
                 resources.Url<UserManagementController>(c => nameof(c.PutUser), values));
         }
 
-        AddGetLink("picture",
+        AddGetLink(ApiConstants.RelPicture,
             resources.Url<UsersController>(c => nameof(c.GetUserPicture), values));
 
         return this;
