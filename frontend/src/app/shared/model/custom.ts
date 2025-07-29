@@ -1,5 +1,7 @@
 /* eslint-disable sort-imports */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { getLink, getAvailableLinks } from '@app/framework/utils/hateos';
+import { PERMISSIONS } from '@app/framework/configurations';
 import { hasAnyLink, DateTime, StringHelper, Types, ApiUrlConfig, ErrorDto } from '@app/framework';
 import * as generated from './generated';
 import { FieldPropertiesVisitor, META_FIELDS, tableField, tableFields } from './schemas';

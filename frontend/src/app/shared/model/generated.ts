@@ -10,6 +10,8 @@
 
 import { hasAnyLink, DateTime, StringHelper, Types, ApiUrlConfig, ErrorDto } from '@app/framework';
 import { FieldPropertiesVisitor, META_FIELDS, tableField, tableFields } from './schemas';
+import { getLink, getAvailableLinks } from '@app/framework/utils/hateos';
+import { PERMISSIONS } from '@app/framework/configurations';
 
 export class ServerErrorDto implements IServerErrorDto {
     /** Uses the cache values because the actual object is frozen. */
