@@ -1,4 +1,6 @@
 ﻿// ==========================================================================
+using Squidex.Pipeline;
+
 //  Squidex Headless CMS
 // ==========================================================================
 //  Copyright (c) Squidex UG (haftungsbeschraenkt)
@@ -22,6 +24,8 @@ public sealed class Startup(IConfiguration config)
 {
     public void ConfigureServices(IServiceCollection services)
     {
+        // Add ExceptionHandlingMiddleware in the pipeline
+    }
         services.AddHttpClient();
         services.AddMemoryCache();
         services.AddHealthChecks();
@@ -29,7 +33,11 @@ public sealed class Startup(IConfiguration config)
         services.AddDefaultForwardRules();
 
         // They must be called in this order.
-        services.AddSquidexMvcWithPlugins(config);
+        services.AddSquidexMvcWithPlugins(config, options =>
+        {
+            options.InvalidModelStateResponseFactory = context =>
+                Squidex.Pipeline.ValidationProblemDetailsFactory.Create(context.ModelState);
+        });
         services.AddSquidexIdentity(config);
         services.AddSquidexIdentityServer();
         services.AddSquidexAuthentication(config);
@@ -122,4 +130,11 @@ public sealed class Startup(IConfiguration config)
         app.UseFrontend();
         app.UsePlugins();
     }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
+        // ... other middlewares and configuration
+    }
 }
+
