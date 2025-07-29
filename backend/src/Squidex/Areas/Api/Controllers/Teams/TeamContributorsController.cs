@@ -37,14 +37,9 @@ public sealed class TeamContributorsController(ICommandBus commandBus, IUserReso
     [ApiCosts(0)]
     public IActionResult GetContributors(string team)
     {
-        var response = Deferred.AsyncResponse(() =>
-        {
-            return GetResponseAsync(Team, false);
-        });
-
         Response.Headers[HeaderNames.ETag] = Team.ToEtag();
+        return Ok(Deferred.AsyncResponse(() => GetResponseAsync(Team, false)));
 
-        return Ok(response);
     }
 
     /// <summary>
