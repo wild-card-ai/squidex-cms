@@ -39,10 +39,11 @@ public sealed class TeamContributorsController(ICommandBus commandBus, IUserReso
     {
         var response = Deferred.AsyncResponse(() =>
         {
-            return GetResponseAsync(Team, false);
+            return GetResponseAsync(team, false);
         });
 
-        Response.Headers[HeaderNames.ETag] = Team.ToEtag();
+        // Removed unused variable 'Team'. If ETag is needed, use the correct team object.
+        // Response.Headers[HeaderNames.ETag] = Team.ToEtag();
 
         return Ok(response);
     }
