@@ -35,7 +35,7 @@ public sealed class TeamContributorsController(ICommandBus commandBus, IUserReso
     [ProducesResponseType(typeof(ContributorsDto), StatusCodes.Status200OK)]
     [ApiPermissionOrAnonymous(PermissionIds.TeamContributorsRead)]
     [ApiCosts(0)]
-    public IActionResult GetContributors(string team)
+    public IActionResult GetContributors()
     {
         var response = Deferred.AsyncResponse(() =>
         {
