@@ -23,6 +23,7 @@ namespace Squidex.Areas.Api.Controllers.Contents;
 
 [SchemaMustBePublished]
 [ApiExplorerSettings(GroupName = nameof(Contents))]
+[RateLimitPolicies.ContentModification]
 public sealed class ContentsController(
     ICommandBus commandBus,
     IContentQueryService contentQuery,

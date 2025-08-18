@@ -27,6 +27,7 @@ public sealed class Startup(IConfiguration config)
         services.AddHealthChecks();
         services.AddDefaultWebServices(config);
         services.AddDefaultForwardRules();
+        services.AddSquidexRateLimiting();
 
         // They must be called in this order.
         services.AddSquidexMvcWithPlugins(config);
@@ -106,6 +107,7 @@ public sealed class Startup(IConfiguration config)
 
         app.UseRouting();
         app.UseAuthentication();
+        app.UseSquidexRateLimiting();
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>

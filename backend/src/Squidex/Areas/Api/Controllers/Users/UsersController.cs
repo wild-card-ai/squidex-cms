@@ -13,6 +13,7 @@ using Squidex.Infrastructure.Commands;
 using Squidex.Shared.Identity;
 using Squidex.Shared.Users;
 using Squidex.Web;
+using Squidex.Web.Pipeline;
 
 namespace Squidex.Areas.Api.Controllers.Users;
 
@@ -20,6 +21,7 @@ namespace Squidex.Areas.Api.Controllers.Users;
 /// Update and query users.
 /// </summary>
 [ApiExplorerSettings(GroupName = nameof(Users))]
+[RateLimitPolicies.UserManagement]
 public sealed class UsersController(
     ICommandBus commandBus,
     IHttpClientFactory httpClientFactory,
