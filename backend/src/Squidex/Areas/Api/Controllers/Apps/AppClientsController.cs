@@ -13,6 +13,7 @@ using Squidex.Domain.Apps.Entities.Apps.Commands;
 using Squidex.Infrastructure.Commands;
 using Squidex.Shared;
 using Squidex.Web;
+using Squidex.Web.Pipeline;
 
 namespace Squidex.Areas.Api.Controllers.Apps;
 
@@ -20,6 +21,7 @@ namespace Squidex.Areas.Api.Controllers.Apps;
 /// Update and query apps.
 /// </summary>
 [ApiExplorerSettings(GroupName = nameof(Apps))]
+[RateLimitPolicies.SensitiveOperations]
 public sealed class AppClientsController(ICommandBus commandBus) : ApiController(commandBus)
 {
     /// <summary>

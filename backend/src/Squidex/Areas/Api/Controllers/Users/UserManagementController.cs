@@ -13,6 +13,7 @@ using Squidex.Infrastructure.Commands;
 using Squidex.Infrastructure.Translations;
 using Squidex.Shared;
 using Squidex.Web;
+using Squidex.Web.Pipeline;
 
 namespace Squidex.Areas.Api.Controllers.Users;
 
@@ -21,6 +22,7 @@ namespace Squidex.Areas.Api.Controllers.Users;
 /// </summary>
 [ApiModelValidation(true)]
 [ApiExplorerSettings(GroupName = "UserManagement")]
+[RateLimitPolicies.UserManagement]
 public sealed class UserManagementController(ICommandBus commandBus, IUserService userService) : ApiController(commandBus)
 {
     /// <summary>

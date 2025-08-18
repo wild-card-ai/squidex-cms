@@ -15,6 +15,7 @@ using Squidex.Infrastructure.Commands;
 using Squidex.Infrastructure.Security;
 using Squidex.Shared;
 using Squidex.Web;
+using Squidex.Web.Pipeline;
 
 namespace Squidex.Areas.Api.Controllers.Apps;
 
@@ -22,6 +23,7 @@ namespace Squidex.Areas.Api.Controllers.Apps;
 /// Update and query apps.
 /// </summary>
 [ApiExplorerSettings(GroupName = nameof(Apps))]
+[RateLimitPolicies.UserManagement]
 public sealed class AppsController(ICommandBus commandBus, IAppProvider appProvider) : ApiController(commandBus)
 {
     /// <summary>

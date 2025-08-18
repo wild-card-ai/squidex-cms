@@ -140,4 +140,10 @@ public static class WebExtensions
 
         return app;
     }
+
+    public static IApplicationBuilder UseSquidexRateLimiting(this IApplicationBuilder app)
+    {
+        app.UseRateLimiter();
+        return app;
+    }
 }

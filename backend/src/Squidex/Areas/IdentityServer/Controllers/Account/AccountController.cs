@@ -17,10 +17,12 @@ using Squidex.Infrastructure.Security;
 using Squidex.Infrastructure.Translations;
 using Squidex.Shared.Identity;
 using Squidex.Shared.Users;
+using Squidex.Web.Pipeline;
 
 namespace Squidex.Areas.IdentityServer.Controllers.Account;
 
 [AutoValidateAntiforgeryToken]
+[RateLimitPolicies.Authentication]
 public sealed class AccountController(
     DynamicSchemeProvider schemes,
     IUserService userService,

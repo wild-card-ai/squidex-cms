@@ -20,11 +20,13 @@ using Squidex.Infrastructure.Translations;
 using Squidex.Infrastructure.Validation;
 using Squidex.Shared.Identity;
 using Squidex.Shared.Users;
+using Squidex.Web.Pipeline;
 
 namespace Squidex.Areas.IdentityServer.Controllers.Profile;
 
 [Authorize]
 [AutoValidateAntiforgeryToken]
+[RateLimitPolicies.SensitiveOperations]
 public sealed class ProfileController(
     IOptions<MyIdentityOptions> identityOptions,
     IUserPictureStore userPictureStore,
